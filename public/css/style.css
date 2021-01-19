@@ -1,0 +1,385 @@
+body {
+    color: white;
+    font-size: 20px;
+}
+
+#notificationBar {
+    position: absolute;
+    top:25px;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+}
+
+#first { 
+    text-align: center; 
+}
+#writeNick {
+    top: 90%;
+    left: 50%;
+}
+#createRoom {
+    top: 30%;
+    left: 50%;
+}
+
+#roomCode {
+    top: 70%;
+    left: 50%;
+}
+.inputB {
+    border: none transparent;
+    outline: none;
+    font-size: x-large;
+    opacity:0.4;
+    background: #bcc4f5;
+    width: 350px;
+    margin: 0;
+    position: absolute;
+    border-radius: 10px;
+    height: 40px;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+    
+}
+#second { 
+    display: none; 
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-align: center; 
+    
+}
+#wait {
+    display: none; 
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+#third { 
+    display: none; 
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+#displayUsers {
+    list-style-type: none;
+}
+#playerBar {
+    width: 20vw;
+    opacity:0.4;
+    float: left;
+    color: black;
+    background: #787faa;
+    border-radius: 10px;
+    margin: 30px;
+    padding:10px;
+    padding-top: 0px;
+
+}
+#playerBar h5{
+    text-align: center;
+    float: left;
+    width: 33%;
+    margin: 15px 0px;
+}
+#playerBar hr{
+    width:90%;
+    margin: 10px;
+}
+.displayLabel{
+    /* float: left; */
+    width: 100%;
+    /* left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%); */
+}
+#yourTurn, #notYourTurn, #errorText, #startGame {
+    display: none;
+}
+#sketchParent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+#codeLine {
+    position: fixed;
+    top: 50%;
+    left: 5%;
+    /* right: 100%; */
+    width: 90%;
+    background: grey;
+}
+
+.btn {
+    box-sizing: border-box;
+    background-color: maroon;
+    position: absolute;
+    border: none;
+    outline: none;
+    color: white;
+    width: 200px;
+    height: 81px;
+    /* padding: 15px 10px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 30px;
+    margin: 0px;
+    transition-duration: 0.25s;
+    cursor: pointer;
+    border-radius: 4px;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+}
+
+#errorMessage {
+    position: absolute;
+    font-size: 30px;
+    font: Georgia;
+    top:80%;
+    left:50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+}
+
+#startGame{
+    position: absolute;
+    top:80%;
+    left:50%;
+}
+
+#displayCode{
+    display: inline-block;
+
+    padding-left:40px;
+    
+    font-size: 40px;
+}
+
+#displayUsers{
+    /* display: inline-block; */
+    margin-left: 60px;
+
+}
+
+#displayUsers li{
+    padding: 10px;
+    font-size:30px;
+}
+#prevGameData{
+    /* display: inline-block; */
+    margin-left: 20px;
+}
+#yourGuess{
+    position: absolute;
+    width:500px;
+    left:50%;
+    top:0%;
+    height:50px;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+    display: none;
+}
+.colWait{
+    display: inline-block;
+    margin-top: 40px;
+    width: 50%;
+    float: left;
+    font-size: 30px;
+}
+.float{
+    float: left;
+    width: 40%;
+    margin: 10px 10px;
+}
+#phraseHold{
+    position: absolute;
+    text-align: center;
+    top: 10%;
+    left: 50%;
+    width: 750px;
+    height: 200px;
+    /* overflow:visible; */
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+}
+
+/* #playerBar{
+    float: left;
+    width: 25%;
+} */
+
+#yourTurn{
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+
+    /* display: grid;
+    grid-template-columns: 500px 1fr;
+  grid-template-rows: 60px 1fr; */
+}
+.playerScore{
+    border-radius: 10px;
+    width: 100%;
+    height: 50px;
+    /* margin: 10px; */
+
+}
+
+.dark{
+    background:rgb(49, 49, 51);
+    color:rgb(164, 181, 185);
+}
+
+#enterPhrase {
+    /* grid-area: 1/1/2/2; */
+    position: absolute;
+    top: 75px;
+    left:50%
+    /* -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%); */
+ }
+#errorTurn{
+    /* grid-area: 2/1/3/2; */
+    position: absolute;
+    color: rgb(247, 67, 67);
+    width:100%;
+    top: 150px;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+ }
+#notYourTurn{
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+    justify-content: center;
+}
+
+#guessLetter{
+    position: absolute;
+    /* float: left; */
+    width: 40px;
+    height: 40px;
+    background: whitesmoke;
+    color:black;
+    opacity: 0.8;
+    text-align: center;
+    text-decoration: none;
+    font-size:25px;
+    border-radius: 5px;
+    top:85px;
+    left:-250px;
+    
+}
+#minorSubmit{
+    display: flex;
+    position: absolute;
+    height:40px;
+    /* float: left; */
+    width: 65px;
+    top:85px;
+    left:-210px;
+    box-sizing: border-box;
+    background-color: maroon;
+    border: none;
+    outline: none;
+    color: white;
+    /* padding: 15px 10px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 0px;
+    transition-duration: 0.25s;
+    cursor: pointer;
+    border-radius: 4px;
+    
+}
+
+#guessPhrase{
+    /* display: flex; */
+
+    position: absolute;
+    top:95px;
+    left: 100px;
+    width: 450px;
+
+    /* left:50% */
+    /* float:left; */
+    
+}
+#errorText{
+    position: absolute;
+    top:160px;
+    width: 500px;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -20%);
+    left:50%;
+}
+#failedLetters{
+    position: absolute;
+    top: 30%;
+    left:85%;
+    list-style-type: none;
+
+}
+
+#failedLetters li{
+    background:grey;
+    height:30px;
+    width:30px;
+    text-align: center;
+    text-decoration: none;
+    /* display: inline-block; */
+    margin:10px;
+    border-radius: 5px;
+}
+
+#backout1{
+    position: absolute;
+    top:5%;
+    left:5%;
+    color: aqua;
+}
+#backout1:hover{
+    color: white;
+}
+#backout3, #backout2{
+    position: absolute;
+    top:5%;
+    left:90%;
+    background:transparent;
+    color: rgb(214, 29, 60);
+}
+#backout3:hover, #backout2:hover{
+    color: white;
+}
+.base-btn{
+    background:transparent;
+    box-sizing: border-box;
+    font-size:75px;
+    height: 90px;
+    width:90px;
+    /* background-color: maroon; */
+    border: none;
+    outline: none;
+    /* color: white; */
+    /* padding: 15px 10px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    /* font-size: 20px; */
+    margin: 0px;
+    transition-duration: 0.25s;
+    cursor: pointer;
+    border-radius: 4px;
+}
