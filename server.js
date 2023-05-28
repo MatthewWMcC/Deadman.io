@@ -1,6 +1,5 @@
 const express = require('express')
 const socket = require('socket.io');
-//const without = require('lodash');
 const gameHeight = 600;
 const gameWidth = 600;
 const rounds = 1;
