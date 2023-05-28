@@ -7,6 +7,8 @@ var waitList = [];
 let scoreList = [];
 document.getElementById('minorSubmit').disabled = true;
 
+const socket = io.connect()
+
 $('#writeNick').focus();
 $('#writeNick').on("keyup", function (event) {
     if (event.keyCode === 13) {//on enter key hit, move to next screen
@@ -14,7 +16,7 @@ $('#writeNick').on("keyup", function (event) {
         nickname = $('#writeNick').val();
         socket.emit('setNickname', nickname)
         $('#first').hide();
-        $('#second').show();
+        $('#secondScreen').show();
         $('#roomCode').focus();
         notTitle();
     }
@@ -27,9 +29,9 @@ addEventListener('keyup', (event) => {
     }
 })
 
-const socket = io.connect()
 
 $('#createRoom').focus();
+
 $('#createRoom').on("click", ((event) => joinLobby(event, codeGenerate(), 'create')));
 
 
@@ -45,7 +47,7 @@ $('#joinRoom').on("click", (event => joinLobby(event, $('#roomCode').val(), 'joi
 
 $('#backout1').on('click', event => { //back to title screen
     event.preventDefault();
-    $('#second').hide();
+    $('#secondScreen').hide();
     $('#wait').hide();
     $('#first').show();
     yesTitle();
@@ -56,7 +58,7 @@ $('#backout2').on('click', (event) => { //leave lobby
     event.preventDefault();
     socket.emit('leave game');
     $('#wait').hide();
-    $('#second').show();
+    $('#secondScreen').show();
     $('#displayUsers').text('');
     waitList = [];
     scoreList = [];
@@ -66,7 +68,7 @@ $('#backout3').on('click', (event) => { //leave game
     event.preventDefault();
     socket.emit('leave game');
     $('#third').hide();
-    $('#second').show();
+    $('#secondScreen').show();
     $('#displayUsers').text('');
 
     waitList = [];
@@ -92,7 +94,7 @@ socket.on('errorMessage', error => {//display errors
 })
 
 socket.on('connectedToServer', () => {
-    $('#second').hide();
+    $('#secondScreen').hide();
     $('#wait').show();
     $('#displayCode').html(`Waiting in room <b>${roomId}</b>`)
 })

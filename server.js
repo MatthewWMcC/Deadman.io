@@ -1,10 +1,6 @@
 const express = require('express')
 const socket = require('socket.io');
-const gameHeight = 600;
-const gameWidth = 600;
 const rounds = 1;
-
-var count = 0;
 
 const app = express();
 
@@ -19,31 +15,27 @@ app.use(express.static('public'));
 
 
 io.sockets.on('connection', (socket) => {
-
     socket.on('setNickname', (data) => {
         socket.nickname = data
     })
 
     socket.on('create', ({ roomId, type }) => {
-
-        let roomName = "room-" + roomId
-        console.log(io.sockets.clients())
+        let roomName = "" + roomId
         if (type === 'join') {
-            if (!io.sockets.adapter.rooms[roomName]) {
+            if (!io.sockets.adapter.rooms.get(roomName)) {
                 socket.emit('errorMessage', 'game does not exist')
                 return;
             }
-            else if (io.sockets.adapter.rooms[roomName].started === true) {
+            else if (io.sockets.adapter.rooms.get(roomName).started === true) {
                 socket.emit('errorMessage', 'game already started')
                 return;
             }
         }
-
-        socket.join(roomName, () => {
+            socket.join(roomName)
             console.log(`${socket.nickname} has joined ${roomName}`)
             socket.emit('connectedToServer')
-            let room = io.sockets.adapter.rooms[roomName];
-            console.log(room.length)
+            let room = io.sockets.adapter.rooms.get(roomName);
+            console.log(room.size)
             socket.roomId = roomId
             if (!room.roomSockets) {
                 room.roomSockets = [];
@@ -55,12 +47,9 @@ io.sockets.on('connection', (socket) => {
                 socket.emit('connectionMade', { nickname: player.nickname, id: player.id })
             })
             socket.broadcast.in(roomName).emit('connectionMade', { nickname: socket.nickname, id: socket.id });
-        });
-        let room = io.sockets.adapter.rooms[roomName];
-
     })
     socket.on('startGame', () => {
-        let room = io.sockets.adapter.rooms[`room-${socket.roomId}`];
+        let room = io.sockets.adapter.rooms.get(`${socket.roomId}`);
         if (room.roomSockets.length > 1) {
             room.started = true;
             initGame(socket.roomId)
@@ -73,8 +62,8 @@ io.sockets.on('connection', (socket) => {
         setUpMinorTurn(socket.roomId);
     });
     socket.on('guessLetter', (letter) => {
-        let roomName = `room-${socket.roomId}`
-        let room = io.sockets.adapter.rooms[roomName];
+        let roomName = `${socket.roomId}`
+        let room = io.sockets.adapter.rooms.get(roomName);
         let { score } = checkForLetter(socket.roomId, letter);
 
         if (score === 0) {
@@ -97,8 +86,8 @@ io.sockets.on('connection', (socket) => {
 
     })
     socket.on('guessPhrase', (phrase) => {
-        let roomName = `room-${socket.roomId}`
-        let room = io.sockets.adapter.rooms[roomName];
+        let roomName = `${socket.roomId}`
+        let room = io.sockets.adapter.rooms.get(roomName);
 
         let tempPhrase = room.phrase.toLowerCase();
         if (tempPhrase === phrase.toLowerCase()) {
@@ -112,14 +101,14 @@ io.sockets.on('connection', (socket) => {
         }
     })
     socket.on('leave game', () => {
-        let roomName = `room-${socket.roomId}`
-        let room = io.sockets.adapter.rooms[roomName];
+        let roomName = `${socket.roomId}`
+        let room = io.sockets.adapter.rooms.get(roomName);
 
         disconnect(socket.roomId, socket)
 
-        console.log(room.length, " 1")
+        console.log(room.size, " 1")
         socket.leave(roomName);
-        console.log(room.length, " 2")
+        console.log(room.size, " 2")
 
         socket.roomId = ''
 
@@ -133,8 +122,8 @@ io.sockets.on('connection', (socket) => {
 })
 
 function disconnect(roomId, socket) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
 
     if (!room) {
         return
@@ -175,8 +164,8 @@ function disconnect(roomId, socket) {
 
 
 function initGame(roomId) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
     var index = 0;
     room.currentTurnList = [];
     room.minorTurnList = [];
@@ -209,8 +198,8 @@ function initGame(roomId) {
 }
 
 function nextTurn(roomId) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
     room.currentTurnList.push(room.currentTurnList.shift());
     io.sockets.in(roomName).emit('yourMinorTurn', false)
     io.sockets.in(roomName).emit('newGuesser', null)
@@ -240,8 +229,8 @@ function nextTurn(roomId) {
 }
 
 function setUpMinorTurn(roomId) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
     room.minorTurnList = []
     room.roomSockets.forEach(player => {
         if (player.index != room.currentTurnList[0]) {
@@ -269,8 +258,8 @@ function setUpMinorTurn(roomId) {
 }
 
 function setPhrase(roomId, phrase) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
     room.phrase = phrase;
     let tempPhrase = phrase;
     tempPhrase = tempPhrase.replace(/[a-zA-Z]/gi, "_")
@@ -280,8 +269,8 @@ function setPhrase(roomId, phrase) {
 }
 
 function minorTurn(roomId) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
 
     room.minorTurnList.push(room.minorTurnList.shift());
 
@@ -298,8 +287,8 @@ function minorTurn(roomId) {
 }
 
 function checkForLetter(roomId, letter) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
 
     let score = 0;
     if (room.phrase.includes(letter) || room.phrase.includes(letter.toUpperCase())) {
@@ -323,8 +312,8 @@ function replaceChar(ogString, letter, i) {
 }
 
 function updateScore(roomId, socket, score) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
     socket.score += score;
 
     room.playerList.forEach(player => {
@@ -337,8 +326,8 @@ function updateScore(roomId, socket, score) {
 }
 
 function checkIfTurnOver(roomId) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
     if (room.failedLetters.length === 6) {
         let turnSocket = room.roomSockets.find(element => element.index === room.currentTurnList[0]);
         updateScore(roomId, turnSocket, 4);
@@ -351,8 +340,8 @@ function checkIfTurnOver(roomId) {
 }
 
 function endGame(roomId) {
-    let roomName = 'room-' + roomId;
-    let room = io.sockets.adapter.rooms[roomName];
+    let roomName = '' + roomId;
+    let room = io.sockets.adapter.rooms.get(roomName);
     room.started = false;
 
     let sortedData = room.playerList.sort((a, b) => {

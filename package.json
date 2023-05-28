@@ -1,0 +1,24 @@
+{
+  "name": "deadman.io",
+  "version": "1.0.0",
+  "description": "Written with js and run on an express server utilizing socket.io to make connections between all players. Players can join their friends in private rooms using auto generated room codes.",
+  "main": "server.js",
+  "scripts": {
+    "test": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatthewWMcC/Deadman.io.git"
+  },
+  "author": "Matthew McCracken",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MatthewWMcC/Deadman.io/issues"
+  },
+  "homepage": "https://github.com/MatthewWMcC/Deadman.io#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}
